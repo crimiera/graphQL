@@ -1,0 +1,30 @@
+version: "3"
+volumes:
+
+services:
+  
+  app:
+    container_name: app-graphql 
+    environment:
+     - NODE_ENV=development
+     - DEBUG=express
+    restart: always
+    build: .  
+    ports:
+      - "3000:4000"
+    command: node  dist/server.js
+    links:
+      - mongo
+  mongo:
+    container_name: my-mongo 
+    image: mongo 
+    volumes:
+      - mongodata:/data/db
+    ports:
+      - "27017:27017"
+volumes:
+
+  mongodata:
+
+networks:
+  webnet:

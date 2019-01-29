@@ -1,0 +1,115 @@
+GRAPH QL  NOTES
+----------------
+1. minimize - amout the data nned to be trasfered 
+2. adaptive. fit a large amout of different framworks
+3. fast.  development  
+4. response only data we need
+5. request only one (n+1 problem user+user_photos);
+
+
+
+Graph ql only has one endpoint and only one single  POST request to the server 
+and the server respond with everything you need
+
+Schema definition Lang(SDL)
+
+type Person  {
+    id:ID!
+    name: String!
+    age:Int! 
+    posts:[Post!]
+}
+
+type Post  {
+    title: String!
+    author:Person! 
+}
+
+* to create relation add author to person field 
+and wrap the  user posts field with square barckets
+
+
+QUery EXample 
+--------------
+
+{
+    allPersons(last:2){
+        name
+        age
+    }
+}
+
+Mutaions 
+----------
+create/update/delete
+
+mutation{
+    createPerson(name:"Bob",age:36){
+        name
+        age
+    }
+}
+name,age rturn fields 
+
+
+Subscriptions
+--------------
+have real time connection to server to informed on immidiate events
+represent by a stream of data 
+
+Subscriptions{
+    newPerson{
+        name
+        age
+    }
+}
+
+//All the api functionality
+
+type Query{
+    allPersons (name:String!,age:String!):Person!
+    allPosts (last:Int):[Post!]!
+}
+type Mutation{
+    createPerson(name:String!,age:String!):Person!
+    updatePerson(id:ID!,name:String!, age:String!):Person!
+    deletePerson(id:ID!):Person!
+    createPost(title:String!):Post!
+    updatePost(id:ID!):Post!
+    deletePost(id:ID!):Post!
+}
+
+type Subscriptions{
+    newPerson:Person!
+    updatePerson:Person!
+    deletePerson:Person!
+    newPost:Post!
+    updatePost:Post!
+    deletePost:Post!
+}
+
+
+Architecture Example 
+
+1. GraphQL with connected database 
+    - often greenfield
+    - request is coming and then the server resolve the data
+    - sql/nosql  
+2. GraphQL connect to existing system
+    - the server act as intgration systems 
+
+3. connected database with integration for exisiting database
+    - the server will  has a data base and map integration
+
+
+Resolver function 
+------------------
+fetch the data for its coresponding field 
+1 per name field
+queries consisits of fields 
+
+
+query {
+    User (id:"er3tx")
+}
+
